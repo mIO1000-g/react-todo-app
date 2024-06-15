@@ -75,10 +75,10 @@ export function SearchUserModal(props) {
                         </TableContainer>
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onClose}>
+                        <Button variant="ghost" mr={3} onClick={onClose}>
                             Close
                         </Button>
-                        <Button variant='ghost' onClick={onClickSet}>設定</Button>
+                        <Button colorScheme="teal" onClick={onClickSet}>設定</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
