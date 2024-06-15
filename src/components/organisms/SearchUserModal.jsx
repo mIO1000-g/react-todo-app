@@ -2,16 +2,20 @@ import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButto
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+/**
+ * ユーザ検索補助モーダル
+ * @param {*} props 
+ * @returns JSX
+ */
 export function SearchUserModal(props) {
     const { isOpen, onClose, setSelectedUserId } = props;
-    // const data = [
-    //     { id: 111, name: "Leanne Graham" },
-    //     { id: 111, name: "Leanne Graham" },
-    // ];
 
+    // 明細データ
     const [data, setData] = useState([]);
+    // 選択したユーザID
     const [id, setId] = useState("");
     
+    // 初期表示時
     useEffect(() => {
         axios
             .get("https://jsonplaceholder.typicode.com/users")
@@ -23,23 +27,29 @@ export function SearchUserModal(props) {
             });
     }, [isOpen]);
 
+    // 前回選択した行情報
     const [prevClickRow, setPrevClickRow] = useState(null);
 
+    // 行クリック時
     const onClickRow = (e) => {
         console.log(e.currentTarget);
         const bgColor = "rgb(255, 255, 0)";
         if (prevClickRow) {
+            // 前回選択した行のスタイルをリセット
             prevClickRow.style.backgroundColor = "#ffffff";
             setId("");
         }
         if (!prevClickRow || prevClickRow.dataset.key !== e.currentTarget.dataset.key) {
+            // 前回選択した行がない または 前回選択した行と異なる場合、ハイライト
             e.currentTarget.style.backgroundColor = bgColor;
             setId(e.currentTarget.dataset.id);
             setPrevClickRow(e.currentTarget);
         }
     };
 
+    // 設定ボタン押下時
     const onClickSet = () => {
+        // 親画面にユーザIDを返す
         setSelectedUserId(id);
         onClose();
     }

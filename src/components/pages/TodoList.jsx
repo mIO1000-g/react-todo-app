@@ -5,18 +5,13 @@ import { SearchUserModal } from "../organisms/SearchUserModal";
 import { TodoEditModal } from "../organisms/TodoEditModal";
 import { getAllTodos, getTodosByWhere } from "../../api/todos";
 
+/**
+ * TODOリストコンポーネント
+ * @returns JSX
+ */
 export function TodoList() {
 
-    // const data = [
-    //     { id: 1, userId: 100, title: "aaaaaa", completed: true },
-    //     { id: 2, userId: 200, title: "aaaaaa", completed: true },
-    //     { id: 3, userId: 300, title: "aaaaaa", completed: false },
-    //     { id: 4, userId: 400, title: "aaaaaa", completed: false },
-    //     { id: 5, userId: 500, title: "aaaaaa", completed: false },
-    //     { id: 6, userId: 600, title: "aaaaaa", completed: true },
-    //     { id: 7, userId: 700, title: "aaaaaa", completed: true },
-    // ];
-
+    // フォーム
     const [form, setForm] = useState({
         userId: "",
         isNotCompleted: false,
@@ -30,8 +25,10 @@ export function TodoList() {
         });
     };
 
+    // 明細データ
     const [data, setData] = useState([]);
 
+    // 初期表示
     useEffect(() => {
         (async () => {
             await getAllTodos()
@@ -46,6 +43,7 @@ export function TodoList() {
         })();
     }, []);
 
+    // 検索ボタン押下
     const [isLoadingSeach, setIsLoadingSearch] = useState(false);
     const onClickSearch = async () => {
         console.log("onClickSearch");
@@ -65,9 +63,12 @@ export function TodoList() {
             });
     };
 
+    // ユーザ検索補助モーダル
     const modal1 = useDisclosure();
+    // TODO編集モーダル
     const modal2 = useDisclosure();
 
+    // モーダル受け渡し用ユーザID設定関数
     const setUserId = (userId) => {
         console.log(userId);
         setForm({
@@ -76,6 +77,7 @@ export function TodoList() {
         });
     };
 
+    // TODO編集モーダル　閉じるボタン押下時
     const onCloseModal2 = async () => {
         console.log("onCloseModal2");
         modal2.onClose();
@@ -139,6 +141,7 @@ export function TodoList() {
     );
 }
 
+// ステータストグル
 function ToggleStatus(props) {
     const { isCompleted } = props;
     const handleStatus = (e) => {
